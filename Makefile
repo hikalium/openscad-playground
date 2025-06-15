@@ -12,6 +12,10 @@ WASM_BUILD=Release
 
 all: public
 
+.PHONY: serve
+serve:
+	cd public && static-web-server -g info --port 4000 -z true -d .
+
 .PHONY: public wasm
 public: \
 		src/wasm \
@@ -65,12 +69,12 @@ libs/openscad-wasm:
 	mkdir -p libs/openscad-wasm
 	wget ${WASM_BUILD_URL} -O libs/openscad-wasm.zip
 	( cd libs/openscad-wasm && unzip ../openscad-wasm.zip )
-	
+
 public/openscad.js: libs/openscad-wasm libs/openscad-wasm/openscad.js
-	ln -sf libs/openscad-wasm/openscad.js public/openscad.js
-		
+	cp --remove-destination libs/openscad-wasm/openscad.js public/openscad.js
+
 public/openscad.wasm: libs/openscad-wasm libs/openscad-wasm/openscad.wasm
-	ln -sf libs/openscad-wasm/openscad.wasm public/openscad.wasm
+	cp --remove-destination libs/openscad-wasm/openscad.wasm public/openscad.wasm
 
 # Var w/ noto fonts
 NOTO_FONTS=\
