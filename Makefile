@@ -16,6 +16,10 @@ all: public
 serve:
 	cd public && static-web-server -g info --port 4000 -z true -d .
 
+.PHONY: pubupdate
+pubupdate:
+	cp -r public/* pub/
+
 .PHONY: public wasm
 public: \
 		src/wasm \
